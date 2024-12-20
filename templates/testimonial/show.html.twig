@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Témoignage{% endblock %}
+
+{% block body %}
+    <h2 class="text-xl font-bold mb-4">Détails du Témoignage</h2>
+    <p><strong>Contenu :</strong> {{ testimonial.content }}</p>
+    <p><strong>Client :</strong> {{ testimonial.client.name }}</p>
+    <a href="{{ path('testimonial_index') }}" class="text-blue-500 hover:underline mt-4 block">Retour à la liste</a>
+{% endblock %}

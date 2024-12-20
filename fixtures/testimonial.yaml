@@ -1,0 +1,4 @@
+App\Entity\Testimonial:
+  testimonial_{1..15}:
+    content: <paragraph(1)>
+    client: "@client_<numberBetween(1,10)>"

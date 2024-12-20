@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+    <div class="mb-4">
+        {{ form_label(form.name, null, {'class': 'block text-sm font-bold mb-1'}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'border border-gray-300 rounded px-3 py-2 w-full'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="mb-4">
+        {{ form_label(form.type, null, {'class': 'block text-sm font-bold mb-1'}) }}
+        {{ form_widget(form.type, {'attr': {'class': 'border border-gray-300 rounded px-3 py-2 w-full'}}) }}
+        {{ form_errors(form.type) }}
+    </div>
+    <div class="mb-4">
+        {{ form_label(form.project, null, {'class': 'block text-sm font-bold mb-1'}) }}
+        {{ form_widget(form.project, {'attr': {'class': 'border border-gray-300 rounded px-3 py-2 w-full'}}) }}
+        {{ form_errors(form.project) }}
+    </div>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Enregistrer</button>
+{{ form_end(form) }}

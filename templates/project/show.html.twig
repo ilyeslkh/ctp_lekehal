@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Projet{% endblock %}
+
+{% block body %}
+    <h2 class="text-xl font-bold mb-4">Détails du Projet</h2>
+    <p><strong>Titre :</strong> {{ project.title }}</p>
+    <p><strong>Description :</strong> {{ project.description }}</p>
+    <a href="{{ path('project_index') }}" class="text-blue-500 hover:underline mt-4 block">Retour à la liste</a>
+{% endblock %}

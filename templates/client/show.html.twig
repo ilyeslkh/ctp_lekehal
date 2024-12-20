@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Client{% endblock %}
+
+{% block body %}
+    <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Détails du Client</h2>
+        <p><strong>Nom :</strong> {{ client.name }}</p>
+        <p><strong>Email :</strong> {{ client.email }}</p>
+        <p><strong>Téléphone :</strong> {{ client.phone }}</p>
+        <a href="{{ path('client_index') }}" class="inline-block text-blue-500 hover:underline mt-4 block">Retour à la liste</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Livrable{% endblock %}
+
+{% block body %}
+    <h2 class="text-xl font-bold mb-4">Détails du Livrable</h2>
+    <p><strong>Nom :</strong> {{ deliverable.name }}</p>
+    <p><strong>Type :</strong> {{ deliverable.type }}</p>
+    <a href="{{ path('deliverable_index') }}" class="text-blue-500 hover:underline mt-4 block">Retour à la liste</a>
+{% endblock %}

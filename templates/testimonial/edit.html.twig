@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un Témoignage{% endblock %}
+
+{% block body %}
+    <h2 class="text-xl font-bold mb-4">Modifier le Témoignage</h2>
+    {% include 'testimonial/_form.html.twig' %}
+    <a href="{{ path('testimonial_index') }}" class="text-blue-500 hover:underline mt-4 block">Retour à la liste</a>
+{% endblock %}

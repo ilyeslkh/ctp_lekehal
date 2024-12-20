@@ -1,0 +1,5 @@
+App\Entity\Client:
+  client_{1..10}:
+    name: <name()>
+    email: <email()>
+    phone: <phoneNumber()>
