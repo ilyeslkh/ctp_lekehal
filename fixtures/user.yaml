@@ -1,0 +1,21 @@
+App\Entity\User:
+  user_admin:
+    email: "admin@example.com"
+    password: "adminpass" # Vous devez hacher le mot de passe avant de l'insérer.
+    roles: ["ROLE_ADMIN"]
+    firstname: "John"
+    lastname: "Doe"
+
+  user_user:
+    email: "user@example.com"
+    password: "userpass" # Idem, mot de passe haché nécessaire.
+    roles: ["ROLE_USER"]
+    firstname: "Jane"
+    lastname: "Smith"
+
+  user_banned:
+    email: "banned@example.com"
+    password: "bannedpass" # Mot de passe haché nécessaire.
+    roles: ["ROLE_BANNED"]
+    firstname: "Baptiste"
+    lastname: "Vasseur"

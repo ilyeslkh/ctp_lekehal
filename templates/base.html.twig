@@ -5,28 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My App{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        customBlue: '#1E3A8A',
-                        customGray: '#64748B',
-                    },
-                },
-            },
-        };
-    </script>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
     <header class="bg-blue-500 text-white py-4">
-        <div class="container mx-auto">
+        <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Gestion de Projets</h1>
+            
+            {% if app.user %}
+                <!-- Si l'utilisateur est connecté -->
+                <div class="flex items-center space-x-4">
+                    <p class="text-lg">Bienvenue, {{ app.user.firstName }} {{ app.user.lastName }}!</p>
+                    <form action="{{ path('app_logout') }}" method="post">
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                            Se déconnecter
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <!-- Si l'utilisateur n'est pas connecté -->
+                <div>
+                    <a href="{{ path('app_login') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Se connecter
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </header>
+
     <main class="container mx-auto my-8">
         {% block body %}{% endblock %}
     </main>
+
     <footer class="bg-gray-800 text-white py-4 text-center">
         <p>&copy; {{ "now"|date("Y") }} My App</p>
     </footer>

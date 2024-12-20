@@ -1,56 +1,54 @@
 security:
-  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+  # Configuration des hashers pour les mots de passe
   password_hashers:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
 
-  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+  # Définir le fournisseur d'utilisateurs
   providers:
     users_in_memory: { memory: null }
     users_in_database:
       entity:
-        class: App\Entity\Client # Utiliser l'entité Client
+        class: App\Entity\User # Utilisez l'entité User ici au lieu de Client
         property: email
 
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
-
     main:
       lazy: true
       provider: users_in_database
       form_login:
         login_path: app_login
         check_path: app_login
-        default_target_path: app_home_page
+        default_target_path: app_home # Redirige vers la page d'accueil après la connexion
       logout:
         path: app_logout
-        target: app_login
-      custom_authenticator: App\Security\SecurityControllerAuthenticator
-
+        target: app_home # Redirige vers la page de login après la déconnexion
+      custom_authenticator: App\Security\SecurityControllerAuthenticator # Si vous avez un authenticator personnalisé
       remember_me:
-        secret: '%kernel.secret%'
-        lifetime: 604800
+        secret: "%kernel.secret%"
+        lifetime: 604800 # Durée de 7 jours
         path: /
         always_remember_me: true
 
+  # Gestion des rôles hiérarchiques
   role_hierarchy:
     ROLE_ADMIN: ROLE_USER
     ROLE_SUPER_ADMIN: ROLE_ADMIN
 
-  # Easy way to control access for large sections of your site
-  # Note: Only the *first* access control that matches will be used
+  # Contrôle d'accès pour les différentes zones de votre application
   access_control:
-    - { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: ^/user, roles: ROLE_USER }
-    - { path: ^/banned, roles: ROLE_BANNED }
-    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin, roles: ROLE_ADMIN } # Accès à /admin uniquement pour les admins
+    - { path: ^/user, roles: ROLE_USER } # Accès à /user uniquement pour les utilisateurs
+    - { path: ^/banned, roles: ROLE_BANNED } # Accès à /banned uniquement pour les utilisateurs bannis
+    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY } # L'accès à /login est libre pour tout utilisateur
 
 when@test:
   security:
     password_hashers:
       Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
         algorithm: auto
-        cost: 4 # Lowest possible value for bcrypt
-        time_cost: 3 # Lowest possible value for argon
-        memory_cost: 10 # Lowest possible value for argon
+        cost: 4 # Valeur la plus basse pour bcrypt
+        time_cost: 3 # Valeur la plus basse pour argon
+        memory_cost: 10 # Valeur la plus basse pour argon

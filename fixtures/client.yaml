@@ -3,5 +3,3 @@ App\Entity\Client:
     name: <name()>
     email: <email()>
     phone: <phoneNumber()>
-    password: "adminpass" # Valeur statique, ou vous pouvez générer un mot de passe pour chaque client
-    roles: ["ROLE_USER"]
