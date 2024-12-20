@@ -6,9 +6,11 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-class Client
+class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,11 +20,17 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+    #[ORM\Column]
+    private ?string $password = null;
 
     /**
      * @var Collection<int, Project>
@@ -52,10 +60,9 @@ class Client
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -64,10 +71,9 @@ class Client
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -76,10 +82,9 @@ class Client
         return $this->phone;
     }
 
-    public function setPhone(string $phone): static
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
-
         return $this;
     }
 
@@ -91,25 +96,22 @@ class Client
         return $this->projects;
     }
 
-    public function addProject(Project $project): static
+    public function addProject(Project $project): self
     {
         if (!$this->projects->contains($project)) {
             $this->projects->add($project);
             $project->setClient($this);
         }
-
         return $this;
     }
 
-    public function removeProject(Project $project): static
+    public function removeProject(Project $project): self
     {
         if ($this->projects->removeElement($project)) {
-            // Set the owning side to null (unless already changed)
             if ($project->getClient() === $this) {
                 $project->setClient(null);
             }
         }
-
         return $this;
     }
 
@@ -121,25 +123,61 @@ class Client
         return $this->testimonials;
     }
 
-    public function addTestimonial(Testimonial $testimonial): static
+    public function addTestimonial(Testimonial $testimonial): self
     {
         if (!$this->testimonials->contains($testimonial)) {
             $this->testimonials->add($testimonial);
             $testimonial->setClient($this);
         }
-
         return $this;
     }
 
-    public function removeTestimonial(Testimonial $testimonial): static
+    public function removeTestimonial(Testimonial $testimonial): self
     {
         if ($this->testimonials->removeElement($testimonial)) {
-            // Set the owning side to null (unless already changed)
             if ($testimonial->getClient() === $this) {
                 $testimonial->setClient(null);
             }
         }
-
         return $this;
+    }
+
+    // UserInterface methods
+
+    public function getRoles(): array{
+    // Récupère les rôles de l'utilisateur
+    $roles = $this->roles;
+
+    // Garantit que chaque utilisateur a au moins le rôle ROLE_USER
+    $roles[] = 'ROLE_USER';
+
+    return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials():void
+    {
+        // If you store temporary, sensitive data on the user, clear it here
     }
 }

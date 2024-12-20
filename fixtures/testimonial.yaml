@@ -1,4 +1,4 @@
 App\Entity\Testimonial:
-  testimonial_{1..15}:
+  testimonial_{1..5}:
     content: <paragraph(1)>
-    client: "@client_<numberBetween(1,10)>"
+    client: "@client_<numberBetween(1,10)>" # Cela fera référence aux clients client_1, client_2, ..., client_10
